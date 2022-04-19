@@ -30,7 +30,7 @@ class JjwtDemoApplicationTests {
         System.out.println("payload: " + decodedJWT.getPayload());
         System.out.println("signature: " + decodedJWT.getSignature());
 
-
+        assert (decodedJWT.getHeader() + "." + decodedJWT.getPayload() + "." + decodedJWT.getSignature()).equals(decodedJWT.getToken()) : "不相等";
     }
 
 }
