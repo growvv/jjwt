@@ -22,7 +22,8 @@ public class JWTUtils {
             builder.withClaim(k,v);
         });
         Calendar cr = Calendar.getInstance();
-        cr.add(Calendar.SECOND,100);
+        cr.add(Calendar.SECOND,100);    //  过期时间 100秒
+        System.out.println(cr.getTime());
         builder.withExpiresAt(cr.getTime());                // 设置有效时间（根据业务需求这是有效时间）
         return builder.sign(Algorithm.HMAC256(SIGN));     // 加签（配置私钥，防止字符串被篡改）
     }

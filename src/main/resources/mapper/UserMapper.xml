@@ -4,11 +4,11 @@
 
 	<resultMap id="BaseResultMap" type="com.example.jjwtdemo.entity.User">
 		<id column="id" property="id" />
-		<id column="name" property="name" />
+		<id column="username" property="username" />
 		<id column="password" property="password" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, name, password
+		id, username, password
 	</sql>
 	
 </mapper>

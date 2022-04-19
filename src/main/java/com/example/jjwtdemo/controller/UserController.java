@@ -7,14 +7,15 @@
 package com.example.jjwtdemo.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.jjwtdemo.entity.User;
 import com.example.jjwtdemo.service.UserService;
 import com.example.jjwtdemo.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Wrapper;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,14 +36,16 @@ public class UserController  {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/login")
-    public Map<String,Object> login(User user, HttpServletResponse response){
+    @PostMapping("/login")
+    public Map<String,Object> login(@RequestBody User user, HttpServletResponse response){
         Map<String,Object> retMap = new HashMap<>();
 
-        User userDB = userService.getById (user);
+//        User userDB = userService.getById (user);
+
+        User userDB = userService.getOne(new QueryWrapper<User>().eq("username",user.getUsername()));
         if(userDB != null){
             Map<String,String> payload = new HashMap<>();
-            payload.put("name",user.getName());
+            payload.put("username",user.getUsername());
             String token = JWTUtils.createToken(payload);
             response.setHeader("token",token);
             retMap.put("state",true);
