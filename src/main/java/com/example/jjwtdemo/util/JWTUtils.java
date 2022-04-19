@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 
 public class JWTUtils {
@@ -15,12 +16,18 @@ public class JWTUtils {
      * @param map 用户信息（非敏感信息）
      * @return
      */
-    public static String createToken(Map<String,String> map){
+    public static String createToken(Map<String,String> payload){
         JWTCreator.Builder builder = JWT.create();
         //遍历map 存放到payload
-        map.forEach((k,v)->{
+        payload.forEach((k,v)->{
             builder.withClaim(k,v);
         });
+
+        HashMap<String, Object> header = new HashMap<>();
+        header.put("alg", "HS256");  // 默认值就是这两个
+        header.put("typ", "JWT");
+        builder.withHeader(header);
+
         Calendar cr = Calendar.getInstance();
         cr.add(Calendar.SECOND,100);    //  过期时间 100秒
         System.out.println(cr.getTime());

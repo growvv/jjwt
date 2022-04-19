@@ -17,9 +17,10 @@ class JjwtDemoApplicationTests {
     @Test
     void test() {
         JWTUtils jwtUtils = new JWTUtils();
+
         HashMap<String, String> payload = new HashMap<>();
-        payload.put("alg", "HS256");
-        payload.put("typ", "JWT");
+        payload.put("username", "admin");
+        payload.put("id", "1");
 
         String token = jwtUtils.createToken(payload);
         System.out.println(token);
